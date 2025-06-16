@@ -1,38 +1,33 @@
 #!/bin/bash
 
 set -o errexit
-
 set -o pipefail
-
 set -o nounset
 
-
 python << END
-
 import sys
 import time
 import psycopg2
+from time import sleep
 
-suggest_unrecoverable_after = 30
+suggest_uncoverable_after = 30
 start = time.time()
-
-while True: 
-    try: 
+while True:
+    try:
         psycopg2.connect(
-        dbname="${POSTGRES_DB}"
-        user="${POSTGRES_USER}"
-        password="${POSTGRES_PASSWORD}"
-        host="${POSTGRES_HOST}"
-        port="${POSTGRES_PORT}"
+            dbname="${POSTGRES_DB}",
+            user="${POSTGRES_USER}",
+            password="${POSTGRES_PASSWORD}",
+            port="${POSTGRES_PORT}",
+            host="${POSTGRES_HOST}"
         )
         break
-except psycopg2.OperationalError as error: 
-    sys.stderr.write("Waiting for PostgreSQL to become available... \n ")
-    if time.time() - start > suggest_unrecoverable_after: 
-    sys.stderr.write("This is taking longer than expected !!. The following exception may be inductive or of  unrecoverable error: '{}'\n".format(error))
-    time.sleep(1)
+    except psycopg2.OperationalError as error:
+        sys.stderr.write("Waiting For Postgres To Become Available...\n")
+        if time.time() - start > suggest_uncoverable_after:
+            sys.stderr.write(f"This is taking longer than expected. The following exception may be an indicator of an error: '{error}'\n")
+            sleep(1)
 END
 
->&2 echo "PostgreSQL is Available"
-
+>&2 echo "PostgreSQL Is Available" 
 exec "$@"
