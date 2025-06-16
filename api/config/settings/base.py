@@ -24,7 +24,7 @@ DJANGO_APPS = [
     "django.contrib.staticfiles",
 ]
 
-INTERNAL_APPS = []
+LOCAL_APPS = ["core_apps.common", "core_apps.users", "core_apps.profiles"]
 
 THIRD_PARTY_APPS = [
     "rest_framework",
@@ -40,7 +40,7 @@ THIRD_PARTY_APPS = [
     "django_celery_beat",
 ]
 
-INSTALLED_APPS = DJANGO_APPS + INTERNAL_APPS + THIRD_PARTY_APPS
+INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRD_PARTY_APPS
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -127,7 +127,7 @@ SITE_ID = 1
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = "/static/"
-STATIC_ROOT = BASE_DIR/ "staticfiles"
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
