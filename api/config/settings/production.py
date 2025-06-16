@@ -5,9 +5,9 @@ from .base import * #noqa
 
 from .base import BASE_DIR
 
-local_env_file = path.join(BASE_DIR, ".envs", ".envs.local")
+local_env_file = path.join(BASE_DIR, ".envs", ".env.local")
 
-if path.isfile(load_dotenv): 
+if path.isfile(local_env_file): 
     load_dotenv(local_env_file)
 
 DEBUG = True
